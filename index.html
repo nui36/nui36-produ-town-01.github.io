@@ -3,57 +3,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PROUD TOWN - หน้าหลัก</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>PROUD TOWN — Evolution of Roleplay</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Kanit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
-        body { 
-            font-family: 'Kanit', sans-serif; 
-            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
-            color: #e2e8f0; 
+        :root {
+            --gold: #1e90ff;
+            --gold-bright: #60b4ff;
+            --blue-fb: #1877f2;
+            --dark: #0a0a0a;
+            --darker: #050505;
+            --surface: #111111;
+            --text: #d4d4d4;
+            --muted: #555;
+        }
+
+        /* [SYSTEM] ป้องกันการลากคลุมและการลากรูปภาพ */
+        * { 
+            margin: 0; padding: 0; box-sizing: border-box; 
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            user-drag: none;
+        }
+
+        body {
+            font-family: 'Kanit', sans-serif;
+            background: var(--darker);
+            color: var(--text);
+            min-height: 100vh;
             overflow: hidden;
-            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .hero-glow { text-shadow: 0 0 20px rgba(59, 130, 246, 0.4); }
-        .btn-main { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .btn-main:hover { transform: translateY(-5px) scale(1.02); }
-        .animate-float { animation: float 5s ease-in-out infinite; }
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(12deg); }
-            50% { transform: translateY(-15px) rotate(15deg); }
+
+        /* Background Effects */
+        body::before {
+            content: '';
+            position: fixed; inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none; z-index: 0; opacity: 0.6;
         }
+
+        .bg-grid {
+            position: fixed; inset: 0;
+            background-image: linear-gradient(rgba(30,144,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(30,144,255,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridDrift 20s linear infinite;
+            z-index: 0;
+        }
+        @keyframes gridDrift { 0% { transform: translateY(0); } 100% { transform: translateY(60px); } }
+
+        .spotlight {
+            position: fixed; top: -20%; left: 50%; transform: translateX(-50%);
+            width: 600px; height: 600px;
+            background: radial-gradient(ellipse at center, rgba(30,144,255,0.06) 0%, transparent 70%);
+            pointer-events: none; z-index: 0;
+        }
+
+        .container { position: relative; z-index: 10; text-align: center; padding: 2rem; max-width: 680px; width: 100%; }
+
+        /* Logo & Title */
+        .logo-emblem {
+            width: 90px; height: 90px;
+            background: linear-gradient(135deg, #1a1a1a, #222);
+            border: 1px solid rgba(30,144,255,0.4);
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Bebas Neue', cursive; font-size: 3rem; color: var(--gold);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            animation: emblemFloat 6s ease-in-out infinite; margin: 0 auto 1.5rem;
+        }
+        @keyframes emblemFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+        h1 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: clamp(4rem, 15vw, 7rem);
+            letter-spacing: 0.04em; color: #fff; line-height: 0.9; margin-bottom: 0.5rem;
+        }
+        h1 .highlight { color: var(--gold); }
+
+        .tagline { font-size: 0.7rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--muted); margin-bottom: 3rem; }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        .social-wrapper {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        @media (min-width: 600px) {
+            .btn-group { flex-direction: row; justify-content: center; }
+        }
+
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            padding: 14px 32px; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.15em;
+            text-transform: uppercase; text-decoration: none; color: inherit;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+        }
+
+        .btn-primary { background: var(--gold); color: #000; box-shadow: 0 0 20px rgba(30,144,255,0.3); }
+        .btn-primary:hover { background: var(--gold-bright); transform: translateY(-2px); }
+
+        .btn-secondary { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.15); }
+        .btn-secondary:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+        /* Social Icons Buttons */
+        .btn-discord, .btn-facebook { width: 52px; height: 52px; padding: 0; }
+
+        .btn-discord { background: rgba(88, 101, 242, 0.15); border: 1px solid rgba(88, 101, 242, 0.4); color: #7289da; }
+        .btn-discord:hover { background: rgba(88, 101, 242, 0.25); border-color: #5865F2; color: #fff; transform: translateY(-2px); }
+
+        .btn-facebook { background: rgba(24, 119, 242, 0.15); border: 1px solid rgba(24, 119, 242, 0.4); color: var(--blue-fb); }
+        .btn-facebook:hover { background: rgba(24, 119, 242, 0.25); border-color: var(--blue-fb); color: #fff; transform: translateY(-2px); }
+
+        /* Decorations */
+        .corner { position: fixed; width: 60px; height: 60px; border-color: rgba(30,144,255,0.2); border-style: solid; pointer-events: none; }
+        .corner-tl { top: 20px; left: 20px; border-width: 1px 0 0 1px; }
+        .corner-tr { top: 20px; right: 20px; border-width: 1px 1px 0 0; }
+        .corner-bl { bottom: 20px; left: 20px; border-width: 0 0 1px 1px; }
+        .corner-br { bottom: 20px; right: 20px; border-width: 0 1px 1px 0; }
     </style>
 </head>
-<body class="flex items-center justify-center p-6 text-center">
-    <div class="max-w-3xl w-full z-10">
-        <div class="mb-10 flex justify-center">
-            <div class="w-20 h-20 bg-blue-600 rounded-2xl flex items-center justify-center text-4xl font-black text-white shadow-2xl animate-float">P</div>
-        </div>
+<body>
+    <div class="bg-grid"></div>
+    <div class="spotlight"></div>
+    <div class="corner corner-tl"></div>
+    <div class="corner corner-tr"></div>
+    <div class="corner corner-bl"></div>
+    <div class="corner corner-br"></div>
 
-        <h1 class="text-6xl md:text-7xl font-black mb-2 tracking-tight hero-glow uppercase">PROUD <span class="text-blue-500">TOWN</span></h1>
-        <p class="text-slate-400 text-sm md:text-base mb-8 tracking-[0.3em] font-light uppercase opacity-60">Evolution of Roleplay</p>
+    <div class="container">
+        <div class="logo-emblem">P T</div>
 
-        <div class="flex flex-col md:flex-row gap-4 justify-center items-center mb-12">
-            <a href="download.html" class="btn-main bg-blue-600 px-10 py-5 rounded-2xl flex items-center justify-center space-x-3 shadow-xl hover:bg-blue-500 w-full md:w-auto">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                <span class="text-lg font-bold text-white uppercase tracking-wider">Download</span>
+        <h1>PROUD <span class="highlight">TOWN</span></h1>
+        <p class="tagline">Enjoy to play</p>
+
+        <div class="btn-group">
+            <a href="download.html" class="btn btn-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                Download
             </a>
-
-            <a href="rules_general.html" class="btn-main bg-white/5 border border-white/10 backdrop-blur-md px-10 py-5 rounded-2xl flex items-center justify-center space-x-3 hover:bg-white/10 w-full md:w-auto">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-                <span class="text-lg font-bold text-white uppercase tracking-wider">Rules</span>
+            <a href="rules_general.html" class="btn btn-secondary">
+                Rules
             </a>
-
-            <a href="https://discord.gg/jWbcXby7m" target="_blank" class="btn-main bg-[#5865F2] px-6 py-5 rounded-2xl flex items-center justify-center shadow-lg hover:opacity-90 w-full md:w-auto">
-                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037 19.736 19.736 0 0 0-4.885 1.515.069.069 0 0 0-.032.027C.533 9.048-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.419-2.157 2.419zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.419-2.157 2.419z"/></svg>
-            </a>
-        </div>
-
-        <div class="mt-8 flex items-center justify-center space-x-2">
-            <span class="flex h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>
-            <span class="text-xs text-slate-500 font-medium uppercase tracking-widest">Server Online</span>
+            
+            <div class="social-wrapper">
+                <a href="https://discord.gg/jWbcXby7m" target="_blank" class="btn btn-discord">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037 19.736 19.736 0 0 0-4.885 1.515.069.069 0 0 0-.032.027C.533 9.048-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.419-2.157 2.419zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.419-2.157 2.419z"/></svg>
+                </a>
+                <a href="https://www.facebook.com/share/1aiFMYQrN1/" target="_blank" class="btn btn-facebook">
+                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                </a>
+            </div>
         </div>
     </div>
+
+    <script>
+        // 1. ห้ามคลิกขวา
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        // 2. ห้ามปุ่มลัด Inspect Element / Source Code / Save Page
+        document.onkeydown = function(e) {
+            if(e.keyCode == 123) return false; // F12
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false; // Ctrl+Shift+I
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) return false; // Ctrl+Shift+C
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false; // Ctrl+Shift+J
+            if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false; // Ctrl+U (Source)
+            if(e.ctrlKey && e.keyCode == 'S'.charCodeAt(0)) return false; // Ctrl+S (Save)
+            if(e.ctrlKey && e.keyCode == 'P'.charCodeAt(0)) return false; // Ctrl+P (Print)
+        };
+
+        // 3. ห้าม Copy (ในกรณีที่หลุดการป้องกัน CSS)
+        document.addEventListener('copy', (e) => {
+            e.preventDefault();
+        });
+    </script>
 </body>
 </html>
-
